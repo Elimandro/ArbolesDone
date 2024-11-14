@@ -1,36 +1,22 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Donación de Árboles</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donación de Árboles</title>
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Helvetica', sans-serif;
         }
-        .mascot {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 150px;
-            height: 150px;
-            background-image: url('https://placehold.co/150x150');
-            background-size: cover;
-            display: none;
-        }
-        @keyframes move {
-            0% { left: 20px; }
-            100% { left: calc(100% - 150px); }
-        }
         .tree-icon {
             position: absolute;
-            top: 0;
-            right: 0;
-            transform: translateX(50%) translateY(-50%);
+            top: -10px;
+            right: -10px;
             background-color: #38a169;
             color: white;
             padding: 0.5rem;
@@ -42,87 +28,17 @@
             animation: jump 1s ease-in-out;
         }
         @keyframes jump {
-            0% { transform: translateX(50%) translateY(-50%) scale(1); }
-            50% { transform: translateX(50%) translateY(-150%) scale(1.5); }
-            100% { transform: translateX(50%) translateY(-50%) scale(1); }
-        }
-        .fade-in {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-        }
-        .game-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            background-color: #e0f7fa;
-            overflow: hidden;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .tree {
-            width: 100px;
-            height: 100px;
-            background-image: url('https://placehold.co/100x100');
-            background-size: cover;
-            margin-bottom: 20px;
-        }
-        .status-bar {
-            width: 80%;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        .status-bar div {
-            width: 45%;
-            height: 20px;
-            background-color: #ccc;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-        .status-bar div span {
-            display: block;
-            height: 100%;
-            background-color: #38a169;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            width: 80%;
-        }
-        .buttons button {
-            width: 45%;
-            padding: 10px;
-            background-color: #38a169;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .buttons button:hover {
-            background-color: #2f855a;
-            transform: translateY(-2px);
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
         }
     </style>
 </head>
-<body class="bg-green-50 text-gray-800">
+<body class="bg-green-50">
     <div id="root"></div>
-    <div class="mascot" id="mascot" alt="Imagen de un leñador seguido por un pequeño árbol animado"></div>
+
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState } = React;
 
         function App() {
             const [donationAmount, setDonationAmount] = useState(0);
@@ -130,219 +46,92 @@
             const [darkMode, setDarkMode] = useState(false);
             const [menuOpen, setMenuOpen] = useState(false);
             const [showTreeIcon, setShowTreeIcon] = useState(false);
-            const [showMascot, setShowMascot] = useState(false);
 
             const handleDonate = () => {
                 setTotalDonations(totalDonations + parseInt(donationAmount));
                 setDonationAmount(0);
                 setShowTreeIcon(true);
-                setShowMascot(true);
                 setTimeout(() => setShowTreeIcon(false), 1000);
-                setTimeout(() => {
-                    const mascot = document.getElementById('mascot');
-                    mascot.style.display = 'block';
-                    mascot.style.animation = 'move 5s linear forwards';
-                    setTimeout(() => {
-                        mascot.style.display = 'none';
-                        mascot.style.animation = 'none';
-                    }, 5000);
-                }, 100);
             };
-
-            const resetDonations = () => {
-                setTotalDonations(0);
-            };
-
-            useEffect(() => {
-                const handleScroll = () => {
-                    const elements = document.querySelectorAll('.fade-in');
-                    elements.forEach(element => {
-                        const rect = element.getBoundingClientRect();
-                        if (rect.top < window.innerHeight) {
-                            element.classList.add('visible');
-                        }
-                    });
-                };
-
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
 
             return (
                 <div className={`flex flex-col items-center p-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-green-50 text-gray-800'}`}>
-                    <header className="w-full bg-green-700 text-white p-4 text-center relative">
-                        <h1 className="text-2xl font-bold">Donación de Árboles</h1>
-                        <img src="https://placehold.co/600x400" alt="Imagen inspiradora de un bosque frondoso" className="mt-4 rounded-lg shadow-lg mx-auto" />
-                        <button onClick={() => setMenuOpen(!menuOpen)} className="absolute top-4 right-4 bg-gray-700 text-white p-1 rounded-lg shadow-lg hover:bg-gray-800 transition duration-300">
+                    {/* Encabezado */}
+                    <header className="w-full bg-green-700 text-white p-6 text-center relative">
+                        <h1 className="text-4xl font-bold">Donación de Árboles</h1>
+                        <img 
+                            src="https://placehold.co/1000x400"
+                            alt="Bosque frondoso"
+                            className="mt-4 rounded-lg shadow-lg w-full max-w-4xl"
+                        />
+                        <button
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            className="absolute top-4 right-4 bg-gray-700 text-white p-2 rounded-lg hover:bg-gray-800 transition"
+                        >
                             <i className="fas fa-bars"></i>
                         </button>
                         {menuOpen && (
-                            <div className={`absolute top-16 right-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg`}>
+                            <nav className="absolute top-16 right-4 bg-white text-gray-800 p-4 rounded-lg shadow-lg">
                                 <ul>
                                     <li className="mb-2"><a href="#about">Sobre Nosotros</a></li>
                                     <li className="mb-2"><a href="#faq">Preguntas</a></li>
                                     <li className="mb-2"><a href="#volunteer">Voluntariado</a></li>
                                     <li className="mb-2">
-                                        <button onClick={() => setDarkMode(!darkMode)} className="w-full bg-gray-700 text-white p-2 rounded-lg shadow-lg hover:bg-gray-800 transition duration-300">
+                                        <button 
+                                            onClick={() => setDarkMode(!darkMode)}
+                                            className="w-full bg-gray-700 text-white p-2 rounded-lg"
+                                        >
                                             {darkMode ? 'Modo Claro' : 'Modo Oscuro'}
                                         </button>
                                     </li>
-                                    <li className="mb-2">
-                                        <button onClick={resetDonations} className="w-full bg-red-500 text-white p-2 rounded-lg shadow-lg hover:bg-red-600 transition duration-300">
-                                            Reiniciar
-                                        </button>
-                                    </li>
                                 </ul>
-                            </div>
+                            </nav>
                         )}
                     </header>
 
-                    <main className="w-full flex flex-col items-center mt-6">
-                        <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
-                            <h2 className="text-xl font-bold mb-2">Contador de Donaciones</h2>
-                            <div className="flex items-center justify-between mb-4">
-                                <span className="text-lg">Árboles Plantados: {totalDonations}</span>
-                                <span className="text-lg">Total Donado: ${totalDonations}</span>
-                            </div>
-                            <div className="w-full bg-gray-200 rounded-full h-4 mb-4 overflow-hidden">
-                                <div className="bg-green-500 h-4 rounded-full transition-all duration-500" style={{ width: `${totalDonations / 100 * 100}%` }}></div>
-                            </div>
-                            <div className="flex items-center mb-4">
-                                <input
-                                    type="number"
-                                    value={donationAmount}
-                                    onChange={(e) => setDonationAmount(e.target.value)}
-                                    className={`w-full p-2 border ${darkMode ? 'border-gray-600' : 'border-gray-300'} rounded-l-lg`}
-                                    placeholder="Ingrese la cantidad a donar"
-                                />
-                                <button
-                                    onClick={handleDonate}
-                                    className="bg-green-700 text-white p-2 rounded-r-lg shadow-lg hover:bg-green-800 transition duration-300 relative"
-                                >
-                                    Donar
-                                    <span className={`tree-icon ${showTreeIcon ? 'show' : ''}`}>
-                                        <i className="fas fa-tree"></i>
-                                    </span>
-                                </button>
-                            </div>
-                        </section>
-
-                        <section id="about" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
-                            <h2 className="text-xl font-bold mb-2">Descripción del Proyecto</h2>
-                            <p>Este proyecto tiene como objetivo plantar árboles para combatir el cambio climático y mejorar el medio ambiente. Cada dólar donado se traduce en un árbol plantado.</p>
-                        </section>
-
-                        <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
-                            <h2 className="text-xl font-bold mb-2">¿Quiénes Somos?</h2>
-                            <p>Somos un equipo comprometido con la reforestación y la sostenibilidad ambiental. Nuestra misión es plantar árboles y educar a la comunidad sobre la importancia de cuidar nuestro planeta.</p>
-                            <img src="https://placehold.co/600x400" alt="Imagen del equipo de trabajo en una plantación de árboles" className="mt-4 rounded-lg shadow-lg mx-auto" />
-                        </section>
-
-                        <section id="faq" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
-                            <h2 className="text-xl font-bold mb-2">Objetivo del Proyecto</h2>
-                            <p>Nuestro objetivo es plantar 10,000 árboles en el próximo año. Con tu ayuda, podemos alcanzar esta meta y hacer una diferencia significativa en nuestro entorno.</p>
-                        </section>
-
-                        <section id="volunteer" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
-                            <h2 className="text-xl font-bold mb-2">Voluntariado</h2>
-                            <p>Únete a nuestro equipo de voluntarios y ayúdanos a plantar árboles y educar a la comunidad sobre la importancia de la reforestación. Juntos, podemos hacer una gran diferencia.</p>
-                            <div className="mt-4">
-                                <h3 className="text-lg font-bold mb-2">Contáctanos</h3>
-                                <form className="space-y-4">
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1" htmlFor="name">Nombre</label>
-                                        <input type="text" id="name" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu nombre" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1" htmlFor="email">Correo Electrónico</label>
-                                        <input type="email" id="email" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu correo electrónico" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1" htmlFor="message">Mensaje</label>
-                                        <textarea id="message" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu mensaje" rows="4"></textarea>
-                                    </div>
-                                    <button type="submit" className="bg-green-700 text-white p-2 rounded-lg shadow-lg hover:bg-green-800 transition duration-300">Enviar</button>
-                                </form>
-                            </div>
-                        </section>
-
-                        <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
-                            <h2 className="text-xl font-bold mb-2">Testimonios</h2>
-                            <div className="space-y-4">
-                                <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="https://placehold.co/50x50" alt="Foto de Juan Pérez" className="rounded-full mr-4" />
-                                    <p>"Este proyecto es increíble. Me siento orgulloso de contribuir a un futuro más verde." - Juan Pérez</p>
-                                </div>
-                                <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="https://placehold.co/50x50" alt="Foto de Carl Johnson" className="rounded-full mr-4" />
-                                    <p>"Es gratificante saber que mi donación está ayudando a mejorar el medio ambiente." - Carl Johnson</p>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section className="w-full p-4 rounded-lg shadow-lg mb-6 fade-in">
-                            <h2 className="text-xl font-bold mb-2">Minijuego: Cuida un Árbol</h2>
-                            <div className="game-container">
-                                <div className="tree" id="tree"></div>
-                                <div className="status-bar">
-                                    <div>
-                                        <span id="water-bar" style={{ width: '100%' }}></span>
-                                    </div>
-                                    <div>
-                                        <span id="fertilizer-bar" style={{ width: '100%' }}></span>
-                                    </div>
-                                </div>
-                                <div className="buttons">
-                                    <button onClick={() => adjustLevel('water', 10)}>Regar</button>
-                                    <button onClick={() => adjustLevel('fertilizer', 10)}>Fertilizar</button>
-                                </div>
-                            </div>
-                        </section>
-                    </main>
-
-                    <footer className="w-full bg-green-700 text-white p-4 text-center mt-6 flex flex-col items-center">
-                        <div className="flex items-center mb-2">
-                            <img src="https://placehold.co/50x50" alt="Logotipo de la UNAN León" className="mr-2" />
-                            <p>Gracias por tu apoyo. Juntos, podemos hacer una diferencia.</p>
+                    {/* Contador de donaciones */}
+                    <section className="w-full max-w-xl bg-white p-6 rounded-lg shadow-lg mt-6">
+                        <h2 className="text-2xl font-bold mb-4">Contador de Donaciones</h2>
+                        <div className="flex justify-between mb-4">
+                            <span className="text-lg">Árboles Plantados: {totalDonations}</span>
+                            <span className="text-lg">Total Donado: ${totalDonations}</span>
                         </div>
-                        <p>&copy; 2023 Estudiantes de la UNAN CUR Somoto</p>
+                        <div className="w-full bg-gray-200 rounded-full h-4 mb-4 overflow-hidden">
+                            <div
+                                className="bg-green-500 h-4 rounded-full"
+                                style={{ width: `${totalDonations / 100 * 100}%` }}
+                            ></div>
+                        </div>
+                        <div className="flex items-center mb-4">
+                            <input
+                                type="number"
+                                value={donationAmount}
+                                onChange={(e) => setDonationAmount(e.target.value)}
+                                className="w-full p-2 border border-gray-300 rounded-l-lg"
+                                placeholder="Ingrese la cantidad"
+                            />
+                            <button
+                                onClick={handleDonate}
+                                className="bg-green-700 text-white p-2 rounded-r-lg hover:bg-green-800 transition"
+                            >
+                                Donar
+                                <span className={`tree-icon ${showTreeIcon ? 'show' : ''}`}>
+                                    <i className="fas fa-tree"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="w-full bg-green-700 text-white p-6 text-center mt-6">
+                        <div className="flex items-center justify-center">
+                            <img src="https://placehold.co/50x50" alt="Logo UNAN León" className="mr-2"/>
+                            <p>Hecho por estudiantes de la UNAN León</p>
+                        </div>
                     </footer>
                 </div>
             );
         }
-
-        function careForTree() {
-            const waterBar = document.getElementById('water-bar');
-            const fertilizerBar = document.getElementById('fertilizer-bar');
-            let waterLevel = 100;
-            let fertilizerLevel = 100;
-
-            const decreaseLevels = () => {
-                waterLevel -= 1;
-                fertilizerLevel -= 1;
-                waterBar.style.width = `${waterLevel}%`;
-                fertilizerBar.style.width = `${fertilizerLevel}%`;
-
-                if (waterLevel <= 0 || fertilizerLevel <= 0) {
-                    alert('¡El árbol necesita más cuidado! Por favor, riega y fertiliza el árbol.');
-                    waterLevel = 100;
-                    fertilizerLevel = 100;
-                }
-            };
-
-            setTimeout(() => {
-                setInterval(decreaseLevels, 3000);
-            }, 30000);
-        }
-
-        function adjustLevel(type, amount) {
-            const bar = document.getElementById(`${type}-bar`);
-            let currentLevel = parseInt(bar.style.width);
-            currentLevel = Math.min(100, currentLevel + amount);
-            bar.style.width = `${currentLevel}%`;
-        }
-
-        document.addEventListener('DOMContentLoaded', careForTree);
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
