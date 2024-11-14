@@ -7,24 +7,24 @@
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Helvetica', sans-serif;
         }
         .mascot {
             position: fixed;
             bottom: 20px;
             left: 20px;
-            width: 80px;
-            height: 80px;
-            background-image: url('https://placehold.co/80x80?text=Leñador+animado');
+            width: 120px;
+            height: 120px;
+            background-image: url('https://placehold.co/120x120?text=Leñador+animado');
             background-size: cover;
             display: none;
         }
         @keyframes move {
             0% { left: 20px; }
-            100% { left: calc(100% - 80px); }
+            100% { left: calc(100% - 120px); }
         }
         .tree-icon {
             position: absolute;
@@ -53,6 +53,10 @@
         .fade-in.visible {
             opacity: 1;
         }
+        .blur {
+            filter: blur(0.5px);
+            transition: filter 0.1s;
+        }
         .game-container {
             position: relative;
             width: 100%;
@@ -61,18 +65,57 @@
             overflow: hidden;
             border-radius: 10px;
             margin-top: 20px;
-        }
-        .lumberjack, .tree {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-size: cover;
-        }
-        .lumberjack {
-            background-image: url('https://placehold.co/50x50?text=Leñador');
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .tree {
-            background-image: url('https://placehold.co/50x50?text=Árbol');
+            width: 100px;
+            height: 100px;
+            background-image: url('https://placehold.co/100x100?text=Árbol');
+            background-size: cover;
+            margin-bottom: 20px;
+        }
+        .status-bar {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .status-bar div {
+            width: 45%;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .status-bar div span {
+            display: block;
+            height: 100%;
+            background-color: #38a169;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+        .buttons button {
+            width: 45%;
+            padding: 10px;
+            background-color: #38a169;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .buttons button:hover {
+            background-color: #2f855a;
         }
     </style>
 </head>
@@ -120,6 +163,10 @@
                             element.classList.add('visible');
                         }
                     });
+                    document.body.classList.add('blur');
+                    setTimeout(() => {
+                        document.body.classList.remove('blur');
+                    }, 100);
                 };
 
                 window.addEventListener('scroll', handleScroll);
@@ -204,9 +251,24 @@
                         <section id="volunteer" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
                             <h2 className="text-xl font-bold mb-2">Voluntariado</h2>
                             <p>Únete a nuestro equipo de voluntarios y ayúdanos a plantar árboles y educar a la comunidad sobre la importancia de la reforestación. Juntos, podemos hacer una gran diferencia.</p>
-                            <button className="bg-green-700 text-white p-2 rounded-lg shadow-lg hover:bg-green-800 transition duration-300 mt-4" onClick={() => alert('¡Gracias por unirte como voluntario!')}>
-                                Ser Voluntario
-                            </button>
+                            <div className="mt-4">
+                                <h3 className="text-lg font-bold mb-2">Contáctanos</h3>
+                                <form className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1" htmlFor="name">Nombre</label>
+                                        <input type="text" id="name" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu nombre" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1" htmlFor="email">Correo Electrónico</label>
+                                        <input type="email" id="email" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu correo electrónico" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1" htmlFor="message">Mensaje</label>
+                                        <textarea id="message" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu mensaje" rows="4"></textarea>
+                                    </div>
+                                    <button type="submit" className="bg-green-700 text-white p-2 rounded-lg shadow-lg hover:bg-green-800 transition duration-300">Enviar</button>
+                                </form>
+                            </div>
                         </section>
 
                         <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
@@ -228,10 +290,21 @@
                         </section>
 
                         <section className="w-full p-4 rounded-lg shadow-lg mb-6 fade-in">
-                            <h2 className="text-xl font-bold mb-2">Minijuego: Protege los Árboles</h2>
+                            <h2 className="text-xl font-bold mb-2">Minijuego: Cuida un Árbol</h2>
                             <div className="game-container">
-                                <div className="lumberjack" id="lumberjack" style={{ top: '50%', left: '50%' }}></div>
-                                <div className="tree" id="tree" style={{ top: '20%', left: '20%' }}></div>
+                                <div className="tree" id="tree"></div>
+                                <div className="status-bar">
+                                    <div>
+                                        <span id="water-bar" style={{ width: '100%' }}></span>
+                                    </div>
+                                    <div>
+                                        <span id="fertilizer-bar" style={{ width: '100%' }}></span>
+                                    </div>
+                                </div>
+                                <div className="buttons">
+                                    <button onClick={() => adjustLevel('water', 10)}>Regar</button>
+                                    <button onClick={() => adjustLevel('fertilizer', 10)}>Fertilizar</button>
+                                </div>
                             </div>
                         </section>
                     </main>
@@ -247,48 +320,38 @@
             );
         }
 
-        function moveLumberjack() {
-            const lumberjack = document.getElementById('lumberjack');
-            const tree = document.getElementById('tree');
-            const gameContainer = document.querySelector('.game-container');
+        function careForTree() {
+            const waterBar = document.getElementById('water-bar');
+            const fertilizerBar = document.getElementById('fertilizer-bar');
+            let waterLevel = 100;
+            let fertilizerLevel = 100;
 
-            let lumberjackX = parseInt(lumberjack.style.left);
-            let lumberjackY = parseInt(lumberjack.style.top);
-            let treeX = parseInt(tree.style.left);
-            let treeY = parseInt(tree.style.top);
+            const decreaseLevels = () => {
+                waterLevel -= 1;
+                fertilizerLevel -= 1;
+                waterBar.style.width = `${waterLevel}%`;
+                fertilizerBar.style.width = `${fertilizerLevel}%`;
 
-            const move = () => {
-                const direction = Math.floor(Math.random() * 4);
-                switch (direction) {
-                    case 0: // up
-                        if (lumberjackY > 0) lumberjackY -= 10;
-                        break;
-                    case 1: // down
-                        if (lumberjackY < gameContainer.clientHeight - 50) lumberjackY += 10;
-                        break;
-                    case 2: // left
-                        if (lumberjackX > 0) lumberjackX -= 10;
-                        break;
-                    case 3: // right
-                        if (lumberjackX < gameContainer.clientWidth - 50) lumberjackX += 10;
-                        break;
-                }
-                lumberjack.style.top = `${lumberjackY}px`;
-                lumberjack.style.left = `${lumberjackX}px`;
-
-                if (Math.abs(lumberjackX - treeX) < 50 && Math.abs(lumberjackY - treeY) < 50) {
-                    alert('¡El leñador atrapó el árbol! Intenta de nuevo.');
-                    lumberjack.style.top = '50%';
-                    lumberjack.style.left = '50%';
-                    tree.style.top = `${Math.random() * (gameContainer.clientHeight - 50)}px`;
-                    tree.style.left = `${Math.random() * (gameContainer.clientWidth - 50)}px`;
+                if (waterLevel <= 0 || fertilizerLevel <= 0) {
+                    alert('¡El árbol necesita más cuidado! Por favor, riega y fertiliza el árbol.');
+                    waterLevel = 100;
+                    fertilizerLevel = 100;
                 }
             };
 
-            setInterval(move, 500);
+            setTimeout(() => {
+                setInterval(decreaseLevels, 3000);
+            }, 30000);
         }
 
-        document.addEventListener('DOMContentLoaded', moveLumberjack);
+        function adjustLevel(type, amount) {
+            const bar = document.getElementById(`${type}-bar`);
+            let currentLevel = parseInt(bar.style.width);
+            currentLevel = Math.min(100, currentLevel + amount);
+            bar.style.width = `${currentLevel}%`;
+        }
+
+        document.addEventListener('DOMContentLoaded', careForTree);
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
