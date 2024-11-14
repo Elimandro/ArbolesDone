@@ -16,15 +16,15 @@
             position: fixed;
             bottom: 20px;
             left: 20px;
-            width: 120px ;
-            height: 120px;
-            background-image: url('9bc9a2bf-825a-4ad4-ac5d-3a80fb8f10b6__1_-removebg-preview.png');
+            width: 80px;
+            height: 80px;
+            background-image: url('https://placehold.co/80x80?text=Leñador+animado');
             background-size: cover;
-            animation: move 5s infinite alternate;
+            display: none;
         }
         @keyframes move {
             0% { left: 20px; }
-            100% { left: calc(100% - 70px); }
+            100% { left: calc(100% - 80px); }
         }
         .tree-icon {
             position: absolute;
@@ -53,11 +53,32 @@
         .fade-in.visible {
             opacity: 1;
         }
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-color: #e0f7fa;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .lumberjack, .tree {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+        }
+        .lumberjack {
+            background-image: url('https://placehold.co/50x50?text=Leñador');
+        }
+        .tree {
+            background-image: url('https://placehold.co/50x50?text=Árbol');
+        }
     </style>
 </head>
 <body class="bg-green-50 text-gray-800">
     <div id="root"></div>
-    <div class="mascot" alt="Imagen de un leñador seguido por un pequeño árbol animado"></div>
+    <div class="mascot" id="mascot" alt="Imagen de un leñador seguido por un pequeño árbol animado"></div>
     <script type="text/babel">
         const { useState, useEffect } = React;
 
@@ -67,12 +88,23 @@
             const [darkMode, setDarkMode] = useState(false);
             const [menuOpen, setMenuOpen] = useState(false);
             const [showTreeIcon, setShowTreeIcon] = useState(false);
+            const [showMascot, setShowMascot] = useState(false);
 
             const handleDonate = () => {
                 setTotalDonations(totalDonations + parseInt(donationAmount));
                 setDonationAmount(0);
                 setShowTreeIcon(true);
+                setShowMascot(true);
                 setTimeout(() => setShowTreeIcon(false), 1000);
+                setTimeout(() => {
+                    const mascot = document.getElementById('mascot');
+                    mascot.style.display = 'block';
+                    mascot.style.animation = 'move 5s linear forwards';
+                    setTimeout(() => {
+                        mascot.style.display = 'none';
+                        mascot.style.animation = 'none';
+                    }, 5000);
+                }, 100);
             };
 
             const resetDonations = () => {
@@ -98,7 +130,7 @@
                 <div className={`flex flex-col items-center p-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-green-50 text-gray-800'}`}>
                     <header className="w-full bg-green-700 text-white p-4 text-center relative">
                         <h1 className="text-2xl font-bold">Donación de Árboles</h1>
-                        <img src="587-image.jpg" alt="Imagen inspiradora de un bosque frondoso" className="mt-4 rounded-lg shadow-lg mx-auto" />
+                        <img src="https://placehold.co/600x400?text=Bosque+frondoso" alt="Imagen inspiradora de un bosque frondoso" className="mt-4 rounded-lg shadow-lg mx-auto" />
                         <button onClick={() => setMenuOpen(!menuOpen)} className="absolute top-4 right-4 bg-gray-700 text-white p-1 rounded-lg shadow-lg hover:bg-gray-800 transition duration-300">
                             <i className="fas fa-bars"></i>
                         </button>
@@ -161,7 +193,7 @@
                         <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
                             <h2 className="text-xl font-bold mb-2">¿Quiénes Somos?</h2>
                             <p>Somos un equipo comprometido con la reforestación y la sostenibilidad ambiental. Nuestra misión es plantar árboles y educar a la comunidad sobre la importancia de cuidar nuestro planeta.</p>
-                            <img src="fotogrupo.jpg" alt="Imagen del equipo de trabajo en una plantación de árboles" className="mt-4 rounded-lg shadow-lg mx-auto" />
+                            <img src="https://placehold.co/600x400?text=Equipo+de+trabajo+plantando+árboles" alt="Imagen del equipo de trabajo en una plantación de árboles" className="mt-4 rounded-lg shadow-lg mx-auto" />
                         </section>
 
                         <section id="faq" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
@@ -172,7 +204,7 @@
                         <section id="volunteer" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
                             <h2 className="text-xl font-bold mb-2">Voluntariado</h2>
                             <p>Únete a nuestro equipo de voluntarios y ayúdanos a plantar árboles y educar a la comunidad sobre la importancia de la reforestación. Juntos, podemos hacer una gran diferencia.</p>
-                            <button className="bg-green-700 text-white p-2 rounded-lg shadow-lg hover:bg-green-800 transition duration-300 mt-4">
+                            <button className="bg-green-700 text-white p-2 rounded-lg shadow-lg hover:bg-green-800 transition duration-300 mt-4" onClick={() => alert('¡Gracias por unirte como voluntario!')}>
                                 Ser Voluntario
                             </button>
                         </section>
@@ -181,24 +213,32 @@
                             <h2 className="text-xl font-bold mb-2">Testimonios</h2>
                             <div className="space-y-4">
                                 <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="8EXQ5IEl_400x400.jpg" alt="Foto de Juan Pérez" className="rounded-full mr-4" />
+                                    <img src="https://placehold.co/50x50?text=Juan+Pérez" alt="Foto de Juan Pérez" className="rounded-full mr-4" />
                                     <p>"Este proyecto es increíble. Me siento orgulloso de contribuir a un futuro más verde." - Juan Pérez</p>
                                 </div>
                                 <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="E6uOCblw_400x400.jpg" alt="Foto de Ricardo Veja" className="rounded-full mr-4" />
+                                    <img src="https://placehold.co/50x50?text=María+López" alt="Foto de María López" className="rounded-full mr-4" />
                                     <p>"Plantar árboles es una de las mejores maneras de combatir el cambio climático. ¡Apoyo totalmente esta iniciativa!" - María López</p>
                                 </div>
                                 <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="IMG_0779.jpeg" alt="Foto de Carl Johnson" className="rounded-full mr-4" />
+                                    <img src="https://placehold.co/50x50?text=Carl+Johnson" alt="Foto de Carl Johnson" className="rounded-full mr-4" />
                                     <p>"Es gratificante saber que mi donación está ayudando a mejorar el medio ambiente." - Carl Johnson</p>
                                 </div>
+                            </div>
+                        </section>
+
+                        <section className="w-full p-4 rounded-lg shadow-lg mb-6 fade-in">
+                            <h2 className="text-xl font-bold mb-2">Minijuego: Protege los Árboles</h2>
+                            <div className="game-container">
+                                <div className="lumberjack" id="lumberjack" style={{ top: '50%', left: '50%' }}></div>
+                                <div className="tree" id="tree" style={{ top: '20%', left: '20%' }}></div>
                             </div>
                         </section>
                     </main>
 
                     <footer className="w-full bg-green-700 text-white p-4 text-center mt-6 flex flex-col items-center">
                         <div className="flex items-center mb-2">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj6xbgpKEy4vr6xbrodOriOaeWwbqQgv-b7D1QUj9sh_cMaBC3ncFYMn6f7g9eMtY5x_weDXa34MMt1UXlTn0kHBjEgVO2QiUE23kH0aWYhlWSh8LAPEJKolL4qoBhYyob6iBM--ZURuTRZVjsV3qvNcZmg8o7gTGcI8t2ah2DMXu1ubsyaFdRQZ7Umog/s300/ESCUDO_UNANLEON_1812.png" alt="Logotipo de la UNAN León" className="mr-2" />
+                            <img src="https://placehold.co/50x50?text=UNAN+León" alt="Logotipo de la UNAN León" className="mr-2" />
                             <p>Gracias por tu apoyo. Juntos, podemos hacer una diferencia.</p>
                         </div>
                         <p>&copy; 2023 Estudiantes de la UNAN CUR Somoto</p>
@@ -207,5 +247,50 @@
             );
         }
 
+        function moveLumberjack() {
+            const lumberjack = document.getElementById('lumberjack');
+            const tree = document.getElementById('tree');
+            const gameContainer = document.querySelector('.game-container');
+
+            let lumberjackX = parseInt(lumberjack.style.left);
+            let lumberjackY = parseInt(lumberjack.style.top);
+            let treeX = parseInt(tree.style.left);
+            let treeY = parseInt(tree.style.top);
+
+            const move = () => {
+                const direction = Math.floor(Math.random() * 4);
+                switch (direction) {
+                    case 0: // up
+                        if (lumberjackY > 0) lumberjackY -= 10;
+                        break;
+                    case 1: // down
+                        if (lumberjackY < gameContainer.clientHeight - 50) lumberjackY += 10;
+                        break;
+                    case 2: // left
+                        if (lumberjackX > 0) lumberjackX -= 10;
+                        break;
+                    case 3: // right
+                        if (lumberjackX < gameContainer.clientWidth - 50) lumberjackX += 10;
+                        break;
+                }
+                lumberjack.style.top = `${lumberjackY}px`;
+                lumberjack.style.left = `${lumberjackX}px`;
+
+                if (Math.abs(lumberjackX - treeX) < 50 && Math.abs(lumberjackY - treeY) < 50) {
+                    alert('¡El leñador atrapó el árbol! Intenta de nuevo.');
+                    lumberjack.style.top = '50%';
+                    lumberjack.style.left = '50%';
+                    tree.style.top = `${Math.random() * (gameContainer.clientHeight - 50)}px`;
+                    tree.style.left = `${Math.random() * (gameContainer.clientWidth - 50)}px`;
+                }
+            };
+
+            setInterval(move, 500);
+        }
+
+        document.addEventListener('DOMContentLoaded', moveLumberjack);
+
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
+</body>
+</html>
