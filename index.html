@@ -1,15 +1,21 @@
 <html>
-<head>
-  <title>Donación de Árboles</title>
+ <head>
+  <title>
+   Donación de Árboles
+  </title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <script src="https://unpkg.com/react/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react/umd/react.development.js">
+  </script>
+  <script src="https://unpkg.com/react-dom/umd/react-dom.development.js">
+  </script>
+  <script src="https://unpkg.com/@babel/standalone/babel.js">
+  </script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Helvetica:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <style>
-    body {
+   body {
       font-family: 'Helvetica', sans-serif;
     }
     .mascot {
@@ -18,7 +24,7 @@
       left: 20px;
       width: 100px;
       height: 100px;
-      background-image: url('');
+      background-image: url('9bc9a2bf-825a-4ad4-ac5d-3a80fb8f10b6__1_-removebg-preview.png');
       background-size: cover;
       display: none;
     }
@@ -116,12 +122,13 @@
       transform: translateY(-2px);
     }
   </style>
-</head>
-<body class="bg-green-50 text-gray-800">
-  <div id="root"></div>
+ </head>
+ <body class="bg-green-50 text-gray-800">
+  <div id="root">
+  </div>
   <img alt="Mascota animada de un árbol sonriente con brazos y piernas" class="mascot" height="100" id="mascot" src="9bc9a2bf-825a-4ad4-ac5d-3a80fb8f10b6__1_-removebg-preview.png" width="100"/>
   <script type="text/babel">
-    const { useState, useEffect } = React;
+   const { useState, useEffect } = React;
 
     function App() {
       const [donationAmount, setDonationAmount] = useState(0);
@@ -328,8 +335,8 @@
       let fertilizerLevel = 100;
 
       const decreaseLevels = () => {
-        waterLevel -= 1;
-        fertilizerLevel -= 1;
+        waterLevel -= 2;
+        fertilizerLevel -= 2;
         waterBar.style.width = `${waterLevel}%`;
         fertilizerBar.style.width = `${fertilizerLevel}%`;
 
@@ -340,7 +347,7 @@
         }
       };
 
-      setInterval(decreaseLevels, 3000);
+      setInterval(decreaseLevels, 1000);
     }
 
     function adjustLevel(type, amount) {
@@ -352,5 +359,5 @@
 
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
-</body>
+ </body>
 </html>
