@@ -18,7 +18,7 @@
             left: 20px;
             width: 150px;
             height: 150px;
-            background-image: url('https://placehold.co/150x150');
+            background-image: url('https://placehold.co/150x150'); /* Aquí pon la URL de la imagen */
             background-size: cover;
             display: none;
         }
@@ -113,7 +113,7 @@
 </head>
 <body class="bg-green-50 text-gray-800">
     <div id="root"></div>
-    <img src="IMG_0803.jpeg" alt="Mascota" id="mascot" class="mascot" />
+    <img src="IMG_0803.jpeg" alt="Mascota" id="mascot" class="mascot" /> <!-- Mascota -->
     <script type="text/babel">
         const { useState, useEffect } = React;
 
@@ -205,137 +205,25 @@
                                     type="number"
                                     value={donationAmount}
                                     onChange={(e) => setDonationAmount(e.target.value)}
-                                    className={`w-full p-2 border ${darkMode ? 'border-gray-600' : 'border-gray-300'} rounded-l-lg`}
-                                    placeholder="Ingrese la cantidad a donar"
+                                    className="w-16 p-2 rounded-lg bg-gray-100 text-gray-800"
+                                    min="1"
                                 />
-                                <button
-                                    onClick={handleDonate}
-                                    className="bg-green-700 text-white p-2 rounded-r-lg shadow-lg hover:bg-green-800 transition duration-300 relative"
-                                >
-                                    Donar
-                                    <span className={`tree-icon ${showTreeIcon ? 'show' : ''}`}>
-                                        <i className="fas fa-tree"></i>
-                                    </span>
+                                <button onClick={handleDonate} className="ml-4 bg-green-700 text-white p-2 rounded-lg hover:bg-green-800 transition duration-300">
+                                    Donar ${donationAmount}
                                 </button>
-                            </div>
-                        </section>
-
-                        <section id="about" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6`}>
-                            <h2 className="text-xl font-bold mb-2">Descripción del Proyecto</h2>
-                            <p>Este proyecto tiene como objetivo plantar árboles para combatir el cambio climático y mejorar el medio ambiente. Cada dólar donado se traduce en un árbol plantado.</p>
-                        </section>
-
-                        <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6`}>
-                            <h2 className="text-xl font-bold mb-2">¿Quiénes Somos?</h2>
-                            <p>Somos un equipo comprometido con la reforestación y la sostenibilidad ambiental. Nuestra misión es plantar árboles y educar a la comunidad sobre la importancia de cuidar nuestro planeta.</p>
-                            <img src="fotogrupo.jpg" alt="Imagen del equipo de trabajo en una plantación de árboles" className="mt-4 rounded-lg shadow-lg mx-auto" />
-                        </section>
-
-                        <section id="faq" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6`}>
-                            <h2 className="text-xl font-bold mb-2">Objetivo del Proyecto</h2>
-                            <p>Nuestro objetivo es plantar 10,000 árboles en el próximo año. Con tu ayuda, podemos alcanzar esta meta y hacer una diferencia significativa en nuestro entorno.</p>
-                        </section>
-
-                        <section id="volunteer" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6`}>
-                            <h2 className="text-xl font-bold mb-2">Voluntariado</h2>
-                            <p>Únete a nuestro equipo de voluntarios y ayúdanos a plantar árboles y educar a la comunidad sobre la importancia de la reforestación. Juntos, podemos hacer una gran diferencia.</p>
-                            <div className="mt-4">
-                                <h3 className="text-lg font-bold mb-2">Contáctanos</h3>
-                                <form className="space-y-4">
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1" htmlFor="name">Nombre</label>
-                                        <input type="text" id="name" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu nombre" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1" htmlFor="email">Correo Electrónico</label>
-                                        <input type="email" id="email" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu correo electrónico" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1" htmlFor="message">Mensaje</label>
-                                        <textarea id="message" className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Tu mensaje" rows="4"></textarea>
-                                    </div>
-                                    <button type="submit" className="bg-green-700 text-white p-2 rounded-lg shadow-lg hover:bg-green-800 transition duration-300">Enviar</button>
-                                </form>
-                            </div>
-                        </section>
-
-                        <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6`}>
-                            <h2 className="text-xl font-bold mb-2">Testimonios</h2>
-                            <div className="space-y-4">
-                                <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="8EXQ5IEl_400x400.jpg" alt="Foto de Juan Pérez" className="rounded-full mr-4" />
-                                    <p>"Este proyecto es increíble. Me siento orgulloso de contribuir a un futuro más verde." - Juan Pérez</p>
-                                </div>
-                                <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="E6uOCblw_400x400.jpg" alt="Foto de Carl Johnson" className="rounded-full mr-4" />
-                                    <p>"Es gratificante saber que mi donación está ayudando a mejorar el medio ambiente." - Carl Johnson</p>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section className="w-full p-4 rounded-lg shadow-lg mb-6">
-                            <h2 className="text-xl font-bold mb-2">Cuida del Árbol</h2>
-                            <div className="game-container">
-                                <div className="tree" id="tree"></div>
-                                <div className="status-bar">
-                                    <div>
-                                        <span id="water-bar" style={{ width: '100%' }}></span>
-                                    </div>
-                                    <div>
-                                        <span id="fertilizer-bar" style={{ width: '100%' }}></span>
-                                    </div>
-                                </div>
-                                <div className="buttons">
-                                    <button onClick={() => adjustLevel('water', 10)}>Regar</button>
-                                    <button onClick={() => adjustLevel('fertilizer', 10)}>Fertilizar</button>
-                                </div>
                             </div>
                         </section>
                     </main>
 
-                    <footer className="w-full bg-green-700 text-white p-4 text-center mt-6 flex flex-col items-center">
-                        <div className="flex items-center mb-2">
-                            <img src="Logo-UNAN-Leon.jpg" alt="Logotipo de la UNAN León" className="mr-2" />
-                            <p>Gracias por tu apoyo. Juntos, podemos hacer una diferencia.</p>
-                        </div>
-                        <p>&copy; 2023 Estudiantes de la UNAN CUR Somoto</p>
+                    <footer className="w-full bg-green-700 text-white p-4 text-center">
+                        <p>Hecho por estudiantes de la UNAN León</p>
+                        <img src="logo.png" alt="Logo UNAN" className="h-8 mx-auto mt-2" />
                     </footer>
+
+                    <div className={`tree-icon ${showTreeIcon ? 'show' : ''}`}>🌳</div>
                 </div>
             );
         }
-
-        function careForTree() {
-            const waterBar = document.getElementById('water-bar');
-            const fertilizerBar = document.getElementById('fertilizer-bar');
-            let waterLevel = 100;
-            let fertilizerLevel = 100;
-
-            const decreaseLevels = () => {
-                waterLevel -= 1;
-                fertilizerLevel -= 1;
-                waterBar.style.width = `${waterLevel}%`;
-                fertilizerBar.style.width = `${fertilizerLevel}%`;
-
-                if (waterLevel <= 0 || fertilizerLevel <= 0) {
-                    alert('¡El árbol necesita más cuidado! Por favor, riega y fertiliza el árbol.');
-                    waterLevel = 100;
-                    fertilizerLevel = 100;
-                }
-            };
-
-            setTimeout(() => {
-                setInterval(decreaseLevels, 3000);
-            }, 30000);
-        }
-
-        function adjustLevel(type, amount) {
-            const bar = document.getElementById(`${type}-bar`);
-            let currentLevel = parseInt(bar.style.width);
-            currentLevel = Math.min(100, currentLevel + amount);
-            bar.style.width = `${currentLevel}%`;
-        }
-
-        document.addEventListener('DOMContentLoaded', careForTree);
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
