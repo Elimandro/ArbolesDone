@@ -16,15 +16,15 @@
             position: fixed;
             bottom: 20px;
             left: 20px;
-            width: 120px;
-            height: 120px;
-            background-image: url('https://img.freepik.com/fotos-premium/papel-verde-textura-suave-fondo-simple_538465-1061.jpg');
+            width: 150px;
+            height: 150px;
+            background-image: url('https://placehold.co/150x150');
             background-size: cover;
             display: none;
         }
         @keyframes move {
             0% { left: 20px; }
-            100% { left: calc(100% - 120px); }
+            100% { left: calc(100% - 150px); }
         }
         .tree-icon {
             position: absolute;
@@ -53,10 +53,6 @@
         .fade-in.visible {
             opacity: 1;
         }
-        .blur {
-            filter: blur(0.5px);
-            transition: filter 0.1s;
-        }
         .game-container {
             position: relative;
             width: 100%;
@@ -73,7 +69,7 @@
         .tree {
             width: 100px;
             height: 100px;
-            background-image: url('https://img.freepik.com/vector-premium/cabeza-hoja-lindo-arbol-mascota-ilustracion-logotipo-icono-vector-plano-dibujos-animados-estilo_461200-237.jpg');
+            background-image: url('https://placehold.co/100x100');
             background-size: cover;
             margin-bottom: 20px;
         }
@@ -112,17 +108,19 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .buttons button:hover {
             background-color: #2f855a;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body class="bg-green-50 text-gray-800">
     <div id="root"></div>
     <div class="mascot" id="mascot" alt="Imagen de un leñador seguido por un pequeño árbol animado"></div>
-    <img src="9bc9a2bf-825a-4ad4-ac5d-3a80fb8f10b6__1_-removebg-preview.png">
     <script type="text/babel">
         const { useState, useEffect } = React;
 
@@ -164,10 +162,6 @@
                             element.classList.add('visible');
                         }
                     });
-                    document.body.classList.add('blur');
-                    setTimeout(() => {
-                        document.body.classList.remove('blur');
-                    }, 100);
                 };
 
                 window.addEventListener('scroll', handleScroll);
@@ -178,7 +172,7 @@
                 <div className={`flex flex-col items-center p-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-green-50 text-gray-800'}`}>
                     <header className="w-full bg-green-700 text-white p-4 text-center relative">
                         <h1 className="text-2xl font-bold">Donación de Árboles</h1>
-                        <img src="587-image.jpg" alt="Imagen inspiradora de un bosque frondoso" className="mt-4 rounded-lg shadow-lg mx-auto" />
+                        <img src="https://placehold.co/600x400" alt="Imagen inspiradora de un bosque frondoso" className="mt-4 rounded-lg shadow-lg mx-auto" />
                         <button onClick={() => setMenuOpen(!menuOpen)} className="absolute top-4 right-4 bg-gray-700 text-white p-1 rounded-lg shadow-lg hover:bg-gray-800 transition duration-300">
                             <i className="fas fa-bars"></i>
                         </button>
@@ -241,7 +235,7 @@
                         <section className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
                             <h2 className="text-xl font-bold mb-2">¿Quiénes Somos?</h2>
                             <p>Somos un equipo comprometido con la reforestación y la sostenibilidad ambiental. Nuestra misión es plantar árboles y educar a la comunidad sobre la importancia de cuidar nuestro planeta.</p>
-                            <img src="fotogrupo.jpg" alt="Imagen del equipo de trabajo en una plantación de árboles" className="mt-4 rounded-lg shadow-lg mx-auto" />
+                            <img src="https://placehold.co/600x400" alt="Imagen del equipo de trabajo en una plantación de árboles" className="mt-4 rounded-lg shadow-lg mx-auto" />
                         </section>
 
                         <section id="faq" className={`w-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} p-4 rounded-lg shadow-lg mb-6 fade-in`}>
@@ -276,15 +270,11 @@
                             <h2 className="text-xl font-bold mb-2">Testimonios</h2>
                             <div className="space-y-4">
                                 <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="8EXQ5IEl_400x400.jpg" alt="Foto de Juan Pérez" className="rounded-full mr-4" />
+                                    <img src="https://placehold.co/50x50" alt="Foto de Juan Pérez" className="rounded-full mr-4" />
                                     <p>"Este proyecto es increíble. Me siento orgulloso de contribuir a un futuro más verde." - Juan Pérez</p>
                                 </div>
                                 <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="E6uOCblw_400x400.jpg" alt="Foto de Juanito" className="rounded-full mr-4" />
-                                    <p>"Plantar árboles es una de las mejores maneras de combatir el cambio climático. ¡Apoyo totalmente esta iniciativa!" - Juanito</p>
-                                </div>
-                                <div className={`p-4 ${darkMode ? 'bg-gray-700 text-white' : 'bg-green-100 text-gray-800'} rounded-lg shadow-lg flex items-center`}>
-                                    <img src="551ff1b9fbac54c672b9f9d0d8bfad7d.jpg" alt="Foto de Carl Johnson" className="rounded-full mr-4" />
+                                    <img src="https://placehold.co/50x50" alt="Foto de Carl Johnson" className="rounded-full mr-4" />
                                     <p>"Es gratificante saber que mi donación está ayudando a mejorar el medio ambiente." - Carl Johnson</p>
                                 </div>
                             </div>
@@ -312,7 +302,7 @@
 
                     <footer className="w-full bg-green-700 text-white p-4 text-center mt-6 flex flex-col items-center">
                         <div className="flex items-center mb-2">
-                            <img src="Logo-UNAN-Leon.png" alt="Logotipo de la UNAN León" className="mr-2" />
+                            <img src="https://placehold.co/50x50" alt="Logotipo de la UNAN León" className="mr-2" />
                             <p>Gracias por tu apoyo. Juntos, podemos hacer una diferencia.</p>
                         </div>
                         <p>&copy; 2023 Estudiantes de la UNAN CUR Somoto</p>
